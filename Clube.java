@@ -3,9 +3,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
-import java.io.RandomAccessFile;
 
-public class Clube implements Entidade {
+public class Clube implements Entidade { // classe que será nossa entidade/registro
 
   protected byte id;
   protected String nome;
@@ -34,7 +33,7 @@ public class Clube implements Entidade {
   }
 
 
-  public byte[] toByteArray(){
+  public byte[] toByteArray(){ // retorna um array de bytes para escrever no arquivo
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
     try {
@@ -51,7 +50,7 @@ public class Clube implements Entidade {
     }
   }
 
-  public void fromByteArray(byte[] b){
+  public void fromByteArray(byte[] b){ // recebe um array de bytes vindo do arquivo e lê salvando cada propriedade devidamente
     ByteArrayInputStream bais = new ByteArrayInputStream(b);
     DataInputStream dis = new DataInputStream(bais);
     try {
