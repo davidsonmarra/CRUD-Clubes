@@ -154,7 +154,7 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
       }
       arq.close();
       clubeProcurado.id = -1;
-      return clubeProcurado;
+      return clubeProcurado; //
     }
     catch(Exception e){
       e.printStackTrace();
