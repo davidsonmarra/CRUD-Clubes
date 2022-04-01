@@ -8,7 +8,7 @@
  <a href="#sobre">Sobre</a> •
  <a href="#funcionalidades">Funcionalidades</a> • 
  <a href="#resultado">Resultado</a> • 
- <a href="#autor">Autor</a>
+ <a href="#autor">Autores</a>
 </p>
 
 <h3 id="sobre">Sobre</h3>
@@ -18,25 +18,40 @@
 <h3 id="funcionalidades">Funcionalidades</h3>
 <ul>
   <li>Adicionar um Clube (C - Create)</li>
-    <img width="300px"  align="center" src="./assets/Create.gif">
+  <br>
+  <div align="center">
+    <img width="350px" src="./assets/Create.gif">
+  </div>
   <li>Procurar por um Clube (R - Read)</li>
-    <img width="300px" align="center" src="./assets/Read.gif">
+  <br>
+  <div align="center">
+    <img width="350px" src="./assets/Read.gif">
+  </div>
   <li>Editar um Clube (U - Update)</li>
-    <img width="300px" align="center" src="./assets/Update.gif">
+  <br>
+  <div align="center">
+    <img width="350px" src="./assets/Update.gif">
+  </div>
   <li>Deletar um Clube (D - Delete)</li>
-    <img width="300px" align="center" src="./assets/Delete.gif">
+  <br>
+  <div align="center">
+    <img width="350px" src="./assets/Delete.gif">
+  </div>
   <li>Um Clube jogar contra o outro</li>
-    <img width="300px" align="center" src="./assets/Play.gif">
+  <br>
+   <div align="center">
+      <img width="350px" src="./assets/Play.gif">
+  </div>
 </ul>
 
 <h3 id="resultado">Resultado</h3>
 <div align="center">
-  <img width="400px"s src="./assets/Result.png">
+  <img width="650px"s src="./assets/Result.png">
 </div>
 
 ---
 
-<h3 id="autor">Autor</h3>
+<h3 id="autor">Autores</h3>
 <table>
   <tr>
     <td align="center">
