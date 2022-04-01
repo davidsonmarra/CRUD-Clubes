@@ -86,9 +86,9 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
     long p; // ponteiro que aponta pra posição inicial de um registro
     long pLap; // ponteiro que aponta para lápide de um registro
     try{
-      System.out.println(clube.toString());
       RandomAccessFile arq = new RandomAccessFile("dados/"+construtor.getName()+".db", "rw");
       arq.seek(0);
+      arq.readByte();
       while(arq.getFilePointer() < arq.length()) { // enquanto não chegar final do arquivo
         pLap = arq.getFilePointer(); // armazena a posição da lápide
         if(arq.readByte() == ' ') {
@@ -114,10 +114,18 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
             }
             break;
           }
+        } else { // se a lápide indicar que é um arquivo excluído
+          tam = arq.readInt(); // lê o tamanho do arquivo
+          b = new byte[tam+1];
+          arq.read(b); // e simplesmente lê exatamente o tamanho do arquivo para o ponteiro estar na lápide do próximo registro
         }
       }
       arq.close();
-      System.out.println("TIME ALTERADO");
+      if(clubeProcurado.id == clube.id) {
+        System.out.println("TIME ALTERADO");
+      }
+      else 
+        System.out.println("TIME NÃO ENCONTRADO");
     }
     catch(Exception e){
       e.printStackTrace();
@@ -144,12 +152,17 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
           b = new byte[tam+1];
           arq.read(b); // armazena em b o registro no arquivo
           clubeProcurado.fromByteArray(b); // cria o objeto com os dados de b
+          System.out.println(clubeProcurado.id);
           if(clubeProcurado.id == id) { // verifica se o registro é o que o usuário está querendo deletar pelo id
             arq.seek(p); // vei para a pos da lápide
             arq.writeByte('*'); // marca como excluído o registro
             arq.close(); // fecha o arquivo
             return clubeProcurado; // retorna clube procurado
           }
+        } else { // se a lápide indicar que é um arquivo excluído
+          tam = arq.readInt(); // lê o tamanho do arquivo
+          b = new byte[tam+1];
+          arq.read(b); // e simplesmente lê exatamente o tamanho do arquivo para o ponteiro estar na lápide do próximo registro
         }
       }
       arq.close();
