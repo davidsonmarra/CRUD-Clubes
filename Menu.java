@@ -174,8 +174,6 @@ public class Menu {
   public static void main(String[] args) { // método principal que controla o menu
     byte opcao;
     Scanner entrada = new Scanner(System.in); // usuário digita a opção desejada
-    Indice index = new Indice();
-    index.iniciliza();
     do{
       mostrar();
       opcao = entrada.nextByte(); // armazenamos a opção desejada na variável opção
