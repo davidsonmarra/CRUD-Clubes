@@ -14,6 +14,7 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
     byte [] b;
     
     try{
+      Indice index = new Indice();
       RandomAccessFile arq = new RandomAccessFile("dados/"+construtor.getName()+".db", "rw"); // abre o arquivo ou cria se ele não existir
       byte id = 1;
       arq.seek(0);
@@ -25,13 +26,15 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
         arq.seek(0); // devemos voltar para a primeira posição
         arq.writeByte(id); // e sobrescrever o id que está lá armazenado
       }
-      arq.seek(arq.length()); // vamos para última posição criar nosso registro 
+      arq.seek(arq.length()); // vamos para última posição criar nosso registro
+      long posAtual = arq.getFilePointer();
       arq.writeByte(' '); // escreve a lápide
       b = novoClube.toByteArray(); // retorna um array de bytes que será o registro
       arq.writeInt(b.length); // escreve o tamanho do arquivo
       arq.writeByte(id); // escreve o ID
       arq.write(b); // escreve o registro
       arq.close(); // fecha o arquivo
+      index.insert(id, posAtual);
     }
     catch(Exception e){
       e.printStackTrace();
