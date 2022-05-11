@@ -25,6 +25,7 @@ public class Indice {
       while(arq.getFilePointer() < arq.length()) {
         byte idAux = arq.readByte();
         if(id == idAux) {
+          arq.close();
           return arq.readLong();
         }
         arq.readLong();

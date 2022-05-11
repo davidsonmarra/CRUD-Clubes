@@ -181,6 +181,8 @@ public class Menu {
       switch(opcao){ // switch case que lida com a opção escolhida pelo usuário
 
         case 0:
+          Ordenacao o = new Ordenacao();
+          o.ordenaArquivoDados();
           System.out.println("FIM.");
           break;
 

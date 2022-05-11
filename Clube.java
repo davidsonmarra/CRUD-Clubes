@@ -12,6 +12,7 @@ public class Clube implements Entidade { // classe que será nossa entidade/regi
   protected String cidade;
   protected byte partidasJogadas;
   protected byte pontos;
+  protected int tam;
 
   // cria instância da classe clube
   public void criarObjeto(String nome, String cnpj, String cidade){
@@ -31,7 +32,6 @@ public class Clube implements Entidade { // classe que será nossa entidade/regi
       "\nPartidas Jogadas: " + partidasJogadas +
       "\nPontos: " + pontos;
   }
-
 
   public byte[] toByteArray(){ // retorna um array de bytes para escrever no arquivo
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
