@@ -41,7 +41,6 @@ public class Ordenacao {
   public void ordenaArquivoDados() {
     byte maxId;
     int contador = 0;
-    long posRegistro;
     int tam;
     byte [] b;
     Clube c = new Clube();
@@ -50,9 +49,13 @@ public class Ordenacao {
     try{
       RandomAccessFile arq = new RandomAccessFile("dados/Clube.db", "rw"); // abre o arquivo ou cria se ele não existir
       RandomAccessFile arq1 = new RandomAccessFile("arqTemp1.db", "rw"); // abre o arquivo ou cria se ele não existir
+      arq1.setLength(0); // reinicia o arquivo 1
       RandomAccessFile arq2 = new RandomAccessFile("arqTemp2.db", "rw"); // abre o arquivo ou cria se ele não existir
+      arq2.setLength(0); // reinicia o arquivo 2
       RandomAccessFile arq3 = new RandomAccessFile("arqTemp3.db", "rw"); // abre o arquivo ou cria se ele não existir
+      arq3.setLength(0); // reinicia o arquivo 3
       RandomAccessFile arq4 = new RandomAccessFile("arqTemp4.db", "rw"); // abre o arquivo ou cria se ele não existir
+      arq4.setLength(0); // reinicia o arquivo 4
       // 2 caminhos e 10 registros por vez
       
       //distribuição
@@ -60,7 +63,8 @@ public class Ordenacao {
       maxId = arq.readByte();
       while(arq.getFilePointer() < arq.length()) {
         Clube cAux = new Clube();
-        if(arq.readByte() == ' ') {
+        byte lap = arq.readByte();
+        if(lap == ' ') {
           tam = arq.readInt();
           b = new byte[tam+1]; // cria um array de bytes para ler o arquivo
           arq.read(b); // lê o tamanho exato do registro e armazena em b
@@ -109,7 +113,7 @@ public class Ordenacao {
         int i = 0;
         RandomAccessFile arqAux = qualArquivo(numDoArq, arq1, arq2, arq3, arq4);
         // carrega e ordena em memória os 10 primeiros registros de um arquivo temporário de entrada
-        while(arqAux.getFilePointer() < arqAux.length() || i < 10 * contador) {
+        while(arqAux.getFilePointer() < arqAux.length() && i < 10 * contador) {
           Clube cAux = new Clube();
           tam = arqAux.readInt();
           b = new byte[tam+1]; // cria um array de bytes para ler o arquivo
@@ -156,7 +160,7 @@ public class Ordenacao {
 
         // se não couber ele continua e vai pegar mais dos arquivos de entrada
         list.clear();
-        while(arqAux.getFilePointer() < arqAux.length() || i < 10 * contador) {
+        while(arqAux.getFilePointer() < arqAux.length() && i < 10 * contador) {
           Clube cAux = new Clube();
           tam = arqAux.readInt();
           b = new byte[tam+1]; // cria um array de bytes para ler o arquivo
@@ -220,13 +224,14 @@ public class Ordenacao {
     byte ultimoId = 0;
     byte [] b;
     Indice index = new Indice();
-    
     try {
       RandomAccessFile arq = new RandomAccessFile("dados/Clube.db", "rw");
       arq.setLength(0);
+      arq.seek(0);
       RandomAccessFile arqAux = new RandomAccessFile(this.arqNumero, "rw"); // abre o arquivo ou cria se ele não existir
       RandomAccessFile arqIndex = new RandomAccessFile("dados/index.db", "rw");
       arqIndex.setLength(0);
+      arqIndex.seek(0);
       arqAux.seek(0);
       arq.writeByte(0);
       // carrega
