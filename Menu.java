@@ -183,6 +183,7 @@ public class Menu {
         case 0:
           Ordenacao o = new Ordenacao();
           o.ordenaArquivoDados();
+          o.reset();
           System.out.println("FIM.");
           break;
 
