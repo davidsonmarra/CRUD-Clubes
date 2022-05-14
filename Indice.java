@@ -22,18 +22,21 @@ public class Indice {
   public long search(byte id) {
     try {
       RandomAccessFile arq = new RandomAccessFile("dados/index.db", "rw"); // abre o arquivo ou cria se ele não existir
-      while(arq.getFilePointer() < arq.length()) {
-        byte idAux = arq.readByte();
-        if(id == idAux) {
-          long pos = arq.readLong();
-          arq.close();
-          return pos;
-        }
-        arq.readLong();
+      long low = 0, high = arq.length() / 9, mid;
+      byte idArq;
+      // nosso índex sempre estará ordenado, então podemos ir para o meio do arquivo e começar a busca binária
+      while(low <= high) {
+        mid = (int)((low + high) / 2);
+        arq.seek(mid * 9);
+        idArq = arq.readByte();
+        System.out.println(mid + " - " + high + " - " + idArq);
+        if(id < idArq)
+          high = mid - 1;
+        else if(id > idArq)
+          low = mid + 1;
+        else
+          return arq.readLong();
       }
-      long lixo = -1;
-      arq.close();
-      return lixo;
     } catch(Exception e) {
       e.printStackTrace();
     }

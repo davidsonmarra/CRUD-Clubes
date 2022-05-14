@@ -15,6 +15,7 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
     
     try{
       Indice index = new Indice();
+      ListaInvertida listaInvertida = new ListaInvertida();
       RandomAccessFile arq = new RandomAccessFile("dados/"+construtor.getName()+".db", "rw"); // abre o arquivo ou cria se ele não existir
       byte id = 1;
       arq.seek(0);
@@ -34,7 +35,12 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
       arq.writeByte(id); // escreve o ID
       arq.write(b); // escreve o registro
       arq.close(); // fecha o arquivo
-      index.insert(id, posAtual);
+      index.insert(id, posAtual); // adiciona no index
+      
+      String[] nomes = novoClube.nome.split(" "); // divide por espaço
+      for (int i = 0; i < nomes.length; i++) {
+        listaInvertida.insertClube(id, nomes[i]);
+      }
     }
     catch(Exception e){
       e.printStackTrace();

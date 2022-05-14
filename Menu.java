@@ -170,6 +170,22 @@ public class Menu {
       System.out.println("Erro");
     }
   }
+
+
+  public static void pesquisaNome(){
+    System.out.println("Você entrou no método de pesquisar por nome do clube.");
+    ListaInvertida li = new ListaInvertida();
+    System.out.println("Entre com o nome do Clube:");
+    Scanner entrada = new Scanner(System.in); // lê o nome
+    String nome = entrada.nextLine(); // armazena o id
+    try{ 
+      li.insertClube((byte)1, nome);
+      li.insertClube((byte)1, "America");
+      li.insertClube((byte)2, "Cruzeiro");
+    } catch (Exception e) { // em caso de algum erro
+      System.out.println("Erro");
+    }
+  }
   
   public static void main(String[] args) { // método principal que controla o menu
     byte opcao;
@@ -205,6 +221,9 @@ public class Menu {
 
         case 5:
           partida();
+          break;
+        case 6:
+          pesquisaNome();
           break;
         
         default:
