@@ -29,14 +29,15 @@ public class Indice {
         mid = (int)((low + high) / 2);
         arq.seek(mid * 9);
         idArq = arq.readByte();
-        System.out.println(mid + " - " + high + " - " + idArq);
         if(id < idArq)
           high = mid - 1;
         else if(id > idArq)
           low = mid + 1;
-        else
+        else {
           return arq.readLong();
+        }
       }
+      arq.close();
     } catch(Exception e) {
       e.printStackTrace();
     }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -175,13 +176,20 @@ public class Menu {
   public static void pesquisaNome(){
     System.out.println("Você entrou no método de pesquisar por nome do clube.");
     ListaInvertida li = new ListaInvertida();
+    ArrayList<Byte> list = new ArrayList();
     System.out.println("Entre com o nome do Clube:");
     Scanner entrada = new Scanner(System.in); // lê o nome
     String nome = entrada.nextLine(); // armazena o id
-    try{ 
-      li.insertClube((byte)1, nome);
-      li.insertClube((byte)1, "America");
-      li.insertClube((byte)2, "Cruzeiro");
+    try{
+      CRUD<Clube> arquivoDeClubes = new CRUD<>(Clube.class.getConstructor()); // cria a instância da classe CRUD que cuida das operações no arquivo
+      list = li.searchClube(nome);
+      System.out.println("Os clubes que correspondem ao nome digitado são:");
+      for(int i = 0; i < list.size(); i++) {
+        Clube clubeProcurado = arquivoDeClubes.Read(list.get(i)); // método que busca e retorna o Clube que possui o id igual ao id passado pelo usuário
+        if(clubeProcurado.id != -1) { // se o clube for encontrado
+          System.out.println(clubeProcurado.toString()); // mostra o clube encontrado
+        }
+      }
     } catch (Exception e) { // em caso de algum erro
       System.out.println("Erro");
     }

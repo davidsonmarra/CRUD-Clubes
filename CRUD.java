@@ -41,6 +41,11 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
       for (int i = 0; i < nomes.length; i++) {
         listaInvertida.insertClube(id, nomes[i]);
       }
+
+      String[] cidades = novoClube.cidade.split(" "); // divide por espaço
+      for (int i = 0; i < cidades.length; i++) {
+        listaInvertida.insertCidade(id, cidades[i]);
+      }
     }
     catch(Exception e){
       e.printStackTrace();
@@ -55,7 +60,6 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
     try{
       RandomAccessFile arq = new RandomAccessFile("dados/"+construtor.getName()+".db", "rw");
       long pos = index.search(id);
-      System.out.println(pos);
       if(pos == -1) {
         arq.close();
         clubeProcurado.id = -1;

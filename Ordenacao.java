@@ -230,7 +230,13 @@ public class Ordenacao {
       arq.seek(0);
       RandomAccessFile arqAux = new RandomAccessFile(this.arqNumero, "rw"); // abre o arquivo ou cria se ele não existir
       RandomAccessFile arqIndex = new RandomAccessFile("dados/index.db", "rw");
+      RandomAccessFile arqListaClube = new RandomAccessFile("dados/listaInvertidaClube.db", "rw");
+      RandomAccessFile arqListaCidade = new RandomAccessFile("dados/listaInvertidaCidade.db", "rw");
+      ListaInvertida listaInvertida = new ListaInvertida();
+
       arqIndex.setLength(0);
+      arqListaClube.setLength(0);
+      arqListaCidade.setLength(0);
       arqIndex.seek(0);
       arqAux.seek(0);
       arq.writeByte(0);
@@ -252,13 +258,21 @@ public class Ordenacao {
         arq.writeByte(c.id); // escreve o id
         arq.write(c.toByteArray()); // escreve o restante do clube
 
+        // insere na lista
+        String[] nomes = c.nome.split(" "); // divide por espaço
+        for (int i = 0; i < nomes.length; i++) {
+          listaInvertida.insertClube(c.id, nomes[i]);
+        }
 
+        String[] cidades = c.cidade.split(" "); // divide por espaço
+        for (int i = 0; i < nomes.length; i++) {
+          listaInvertida.insertCidade(c.id, cidades[i]);
+        }
       }
       arq.seek(0);
       arq.writeByte(ultimoId);
     } catch(Exception e) {
       e.printStackTrace();
     }
-
   }
 }
