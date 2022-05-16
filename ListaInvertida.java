@@ -147,70 +147,125 @@ public class ListaInvertida {
     }
   }
 
-    // Pesquisa no arquivo de Lista Invertida
-    public ArrayList<Byte> searchClube(String nome) {
-      byte id;
-      // ArrayList<ArrayList<Byte>> list = new ArrayList();
-      long proxPos;
-      int i;
-      ArrayList<Byte> ids = new ArrayList();
+  // Pesquisa no arquivo de Lista Invertida
+  public ArrayList<Byte> searchClube(String nome) {
+    byte id;
+    // ArrayList<ArrayList<Byte>> list = new ArrayList();
+    long proxPos;
+    int i;
+    ArrayList<Byte> ids = new ArrayList();
 
-      try {
-        RandomAccessFile arq = new RandomAccessFile("dados/listaInvertidaClube.db", "rw"); // abre o arquivo ou cria se ele não existir
-        String[] nomes = nome.split(" "); // divide por espaço
-        for (int j = 0; j < nomes.length; j++) {
-          System.out.println(nomes[j]);
-          arq.seek(0); // vai pra posição 0
-          while(arq.getFilePointer() < arq.length()) {
-            System.out.println(j);
-            if(nomes[j].equals(arq.readUTF())) { // o nome já existe
-              for(i = 0; i < 4; i++) {
-                id = arq.readByte();
-                if(id != -1) {
-                  ids.add(id);
-                }    
-              }
-              proxPos = arq.readLong();
-              if(proxPos != -1) { // quer dizer que há uma próxima posição
-                arq.seek(proxPos);
-              } else break;
-            } else { // lê ate a proxima posição
-              arq.readByte();
-              arq.readByte();
-              arq.readByte();
-              arq.readByte();
-              arq.readLong();
+    try {
+      RandomAccessFile arq = new RandomAccessFile("dados/listaInvertidaClube.db", "rw"); // abre o arquivo ou cria se ele não existir
+      String[] nomes = nome.split(" "); // divide por espaço
+      for (int j = 0; j < nomes.length; j++) {
+        System.out.println(nomes[j]);
+        arq.seek(0); // vai pra posição 0
+        while(arq.getFilePointer() < arq.length()) {
+          if(nomes[j].equals(arq.readUTF())) { // o nome já existe
+            for(i = 0; i < 4; i++) {
+              id = arq.readByte();
+              if(id != -1) {
+                ids.add(id);
+              }    
             }
+            proxPos = arq.readLong();
+            if(proxPos != -1) { // quer dizer que há uma próxima posição
+              arq.seek(proxPos);
+            } else break;
+          } else { // lê ate a proxima posição
+            arq.readByte();
+            arq.readByte();
+            arq.readByte();
+            arq.readByte();
+            arq.readLong();
           }
-          // list.add(ids);
         }
-        arq.close();
-
-        // interseção
-        ArrayList<Byte> aux = new ArrayList();
-        for(i = 0; i < ids.size(); i++) {
-          int ocorrencias = Collections.frequency(ids, ids.get(i));
-          if(ocorrencias < nomes.length) {
-            aux.add(ids.get(i));
-          }
-        }
-        ids.removeAll(aux);
-        ArrayList<Byte> list = new ArrayList();
-        for(i = 0; i < ids.size(); i++) {
-          if(!list.contains(ids.get(i)))
-            list.add(ids.get(i));
-        }
-        System.out.println(list.toString());
-        // ids.clear();
-        
-        // list.get(0).retainAll(list.get(1));
-        // System.out.println(list.toString());
-        
-        return list;
-      } catch(Exception e) {
-        e.printStackTrace();
-        ids.add((byte)-1);
-        return ids;
+        // list.add(ids);
       }
+      arq.close();
+
+      // interseção
+      ArrayList<Byte> aux = new ArrayList();
+      for(i = 0; i < ids.size(); i++) {
+        int ocorrencias = Collections.frequency(ids, ids.get(i));
+        if(ocorrencias < nomes.length) {
+          aux.add(ids.get(i));
+        }
+      }
+      ids.removeAll(aux);
+      ArrayList<Byte> list = new ArrayList();
+      for(i = 0; i < ids.size(); i++) {
+        if(!list.contains(ids.get(i)))
+          list.add(ids.get(i));
+      }
+      System.out.println(list.toString());
+      return list;
+    } catch(Exception e) {
+      e.printStackTrace();
+      ids.add((byte)-1);
+      return ids;
     }
+  }
+
+  // Pesquisa no arquivo de Lista Invertida
+  public ArrayList<Byte> searchCidade(String nome) {
+    byte id;
+    // ArrayList<ArrayList<Byte>> list = new ArrayList();
+    long proxPos;
+    int i;
+    ArrayList<Byte> ids = new ArrayList();
+
+    try {
+      RandomAccessFile arq = new RandomAccessFile("dados/listaInvertidaCidade.db", "rw"); // abre o arquivo ou cria se ele não existir
+      String[] nomes = nome.split(" "); // divide por espaço
+      for (int j = 0; j < nomes.length; j++) {
+        System.out.println(nomes[j]);
+        arq.seek(0); // vai pra posição 0
+        while(arq.getFilePointer() < arq.length()) {
+          if(nomes[j].equals(arq.readUTF())) { // o nome já existe
+            for(i = 0; i < 4; i++) {
+              id = arq.readByte();
+              if(id != -1) {
+                ids.add(id);
+              }    
+            }
+            proxPos = arq.readLong();
+            if(proxPos != -1) { // quer dizer que há uma próxima posição
+              arq.seek(proxPos);
+            } else break;
+          } else { // lê ate a proxima posição
+            arq.readByte();
+            arq.readByte();
+            arq.readByte();
+            arq.readByte();
+            arq.readLong();
+          }
+        }
+        // list.add(ids);
+      }
+      arq.close();
+
+      // interseção
+      ArrayList<Byte> aux = new ArrayList();
+      for(i = 0; i < ids.size(); i++) {
+        int ocorrencias = Collections.frequency(ids, ids.get(i));
+        if(ocorrencias < nomes.length) {
+          aux.add(ids.get(i));
+        }
+      }
+      ids.removeAll(aux);
+      ArrayList<Byte> list = new ArrayList();
+      for(i = 0; i < ids.size(); i++) {
+        if(!list.contains(ids.get(i)))
+          list.add(ids.get(i));
+      }
+      System.out.println(list.toString());
+      return list;
+    } catch(Exception e) {
+      e.printStackTrace();
+      ids.add((byte)-1);
+      return ids;
+    }
+  }
 }
