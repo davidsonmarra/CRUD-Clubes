@@ -72,8 +72,7 @@ public class Ordenacao {
           cAux.tam = tam;
           list.add(cAux);
           contador++;
-
-          if(contador >= 10 || cAux.id == maxId) {
+          if(contador >= 10 || arq.getFilePointer() >= arq.length()) {
             contador = 0;
             list.sort((o1, o2)
             -> o1.id == o2.id ? 0 : (
@@ -108,7 +107,8 @@ public class Ordenacao {
       int numDoArq = 0;
       arq1.seek(0); // vai para a posição 0 do arquivo 1
       arq2.seek(0);
-      //intercalação
+      
+      // intercalação
       while(true) {
         int i = 0;
         RandomAccessFile arqAux = qualArquivo(numDoArq, arq1, arq2, arq3, arq4);
@@ -224,6 +224,7 @@ public class Ordenacao {
     byte ultimoId = 0;
     byte [] b;
     Indice index = new Indice();
+    System.out.println("ARQ - " + this.arqNumero);
     try {
       RandomAccessFile arq = new RandomAccessFile("dados/Clube.db", "rw");
       arq.setLength(0);
@@ -265,7 +266,7 @@ public class Ordenacao {
         }
 
         String[] cidades = c.cidade.split(" "); // divide por espaço
-        for (int i = 0; i < nomes.length; i++) {
+        for (int i = 0; i < cidades.length; i++) {
           listaInvertida.insertCidade(c.id, cidades[i]);
         }
       }
