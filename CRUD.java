@@ -8,9 +8,29 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
   public CRUD(Constructor<T> construtor) {
     this.construtor = construtor;
   }
+  
+  public String Criptografa(String nome) {
+    String nomeCriptografado = "";
+    int cifra = 128;
 
+    for (int i=0; i < nome.length(); i++) {
+      nomeCriptografado += (char)(nome.charAt(i) + cifra);
+    }
+    return nomeCriptografado;
+  }
+
+  public String Descriptografa(String nome) {
+    String nomeDescriptografado = "";
+    int cifra = 128;
+
+    for (int i=0; i < nome.length(); i++) {
+      nomeDescriptografado += (char)(nome.charAt(i) - cifra);
+    }
+    return nomeDescriptografado;
+  }
+  
   public void Create(Clube novoClube){ // método para armazenar o registro no arquivo
-      
+    
     byte [] b;
     
     try{
@@ -18,6 +38,8 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
       ListaInvertida listaInvertida = new ListaInvertida();
       RandomAccessFile arq = new RandomAccessFile("dados/"+construtor.getName()+".db", "rw"); // abre o arquivo ou cria se ele não existir
       byte id = 1;
+      String nomeDescriptografado = novoClube.nome;
+      novoClube.nome = Criptografa(novoClube.nome); // criptografa o atributo nome
       arq.seek(0);
       if(arq.length() == 0) { // se o arquivo não tiver nenhuma posição significa que ele está vazio
         arq.writeByte(id); // logo podemos escrever o id 1 no cabeçalho
@@ -37,7 +59,7 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
       arq.close(); // fecha o arquivo
       index.insert(id, posAtual); // adiciona no index
       
-      String[] nomes = novoClube.nome.split(" "); // divide por espaço
+      String[] nomes = nomeDescriptografado.split(" "); // divide por espaço
       for (int i = 0; i < nomes.length; i++) {
         listaInvertida.insertClube(id, nomes[i]);
       }
@@ -73,6 +95,7 @@ public class CRUD<T extends Entidade> { // método genérico que gerencia as ope
         clubeProcurado.fromByteArray(b); // cria um objeto com as informações armazenadas em b
         if(clubeProcurado.id == id) { // encontrou o clube
           arq.close(); // fecha o arquivo
+          clubeProcurado.nome = Descriptografa(clubeProcurado.nome);
           return clubeProcurado; // retorna o clube procurado
         }
       } else { // se a lápide indicar que é um arquivo excluído

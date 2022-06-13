@@ -13,6 +13,10 @@ public class Menu {
     System.out.println("5. Jogar partida");
     System.out.println("6. Pesquisar por nome de um clube");
     System.out.println("7. Pesquisar por cidade de um clube");
+    System.out.println("8. Comprime o arquivo de dados");
+    System.out.println("9. Descomprime um arquivo comprimido");
+
+
     System.out.println("0. Fim");
 
     System.out.println("Opcao:");
@@ -173,8 +177,7 @@ public class Menu {
       System.out.println("Erro");
     }
   }
-
-
+  
   public static void pesquisaNome(){
     System.out.println("Você entrou no método de pesquisar por nome do clube.");
     ListaInvertida li = new ListaInvertida();
@@ -219,6 +222,23 @@ public class Menu {
     }
   }
   
+  public static void comprime() {
+    System.out.println("Você entrou no método de comprimir o arquivo original.");
+    System.out.println("Entre com a versão da compressão:");
+    Scanner entrada = new Scanner(System.in); // lê o nome
+    String versao = entrada.nextLine(); // armazena a versao
+    LZW lzw = new LZW();
+    lzw.comprime(versao);
+  }
+
+  public static void descomprime() {
+    System.out.println("Você entrou no método de descomprimir o arquivo original.");
+    System.out.println("Entre com a versão da compressão:");
+    Scanner entrada = new Scanner(System.in); // lê o nome
+    String versao = entrada.nextLine(); // armazena a versao
+    LZW lzw = new LZW();
+    lzw.descomprime(versao);
+  }
   public static void main(String[] args) { // método principal que controla o menu
     byte opcao;
     Scanner entrada = new Scanner(System.in); // usuário digita a opção desejada
@@ -250,7 +270,6 @@ public class Menu {
         case 4:
           exclui();
           break;
-
         case 5:
           partida();
           break;
@@ -260,7 +279,12 @@ public class Menu {
         case 7:
           pesquisaCidade();
           break;
-        
+        case 8: 
+          comprime();
+          break;
+        case 9: 
+          descomprime();
+          break;
         default:
           System.out.println("Opção inválida.");
       }
